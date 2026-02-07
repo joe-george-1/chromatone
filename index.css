@@ -361,9 +361,7 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .controls-panel {
-        order: -1;
-    }
+
 }
 
 /* Footer Tabs */
