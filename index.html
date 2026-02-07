@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chromatone</title>
+    <meta name="description" content="Encode color as directional halftone patterns">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>Chromatone</h1>
+            <p class="subtitle">Color → Monochrome Pattern Encoding</p>
+        </header>
+
+        <main class="main-content">
+            <section class="canvas-section">
+                <div class="canvas-container">
+                    <div class="canvas-wrapper" id="inputWrapper">
+                        <label>Original</label>
+                        <canvas id="inputCanvas"></canvas>
+                        <div class="drop-zone" id="dropZone">
+                            <span class="drop-icon">📷</span>
+                            <span>Drop image or click to upload</span>
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                        </div>
+                    </div>
+                    <div class="canvas-wrapper" id="outputWrapper">
+                        <label>Hatched Output</label>
+                        <canvas id="outputCanvas"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="controls-panel">
+                <div class="control-group">
+                    <h3>Pattern Settings</h3>
+
+                    <div class="control">
+                        <label for="cellSize">Cell Size</label>
+                        <input type="range" id="cellSize" min="4" max="24" value="8">
+                        <span class="value" id="cellSizeValue">8px</span>
+                    </div>
+
+                    <div class="control">
+                        <label for="scale">Scale</label>
+                        <input type="range" id="scale" min="0.5" max="3" value="1" step="0.1">
+                        <span class="value" id="scaleValue">1.0</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>Intensity</h3>
+
+                    <div class="control">
+                        <label for="minDensity">Min Density</label>
+                        <input type="range" id="minDensity" min="0" max="0.5" value="0.1" step="0.05">
+                        <span class="value" id="minDensityValue">0.1</span>
+                    </div>
+
+                    <div class="control">
+                        <label for="maxDensity">Max Density</label>
+                        <input type="range" id="maxDensity" min="0.5" max="1.5" value="1" step="0.05">
+                        <span class="value" id="maxDensityValue">1.0</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>Color Legend</h3>
+                    <div class="legend">
+                        <div class="legend-item"><span class="pattern red">/</span> Red</div>
+                        <div class="legend-item"><span class="pattern blue">\</span> Blue</div>
+                        <div class="legend-item"><span class="pattern yellow">•</span> Yellow</div>
+                        <div class="legend-item"><span class="pattern orange">/•</span> Orange</div>
+                        <div class="legend-item"><span class="pattern green">\•</span> Green</div>
+                        <div class="legend-item"><span class="pattern purple">X</span> Purple</div>
+                    </div>
+                </div>
+
+                <div class="control-group actions">
+                    <button id="processBtn" class="btn primary" disabled>Process Image</button>
+                    <button id="exportBtn" class="btn secondary" disabled>Export PNG</button>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="footer-tabs">
+            <button class="tab-btn" id="aboutBtn">
+                <span class="tab-icon">ℹ️</span>
+                <span>About</span>
+            </button>
+            <a href="https://github.com/joe-george-1" target="_blank" class="tab-btn">
+                <span class="tab-icon">🐙</span>
+                <span>GitHub</span>
+            </a>
+            <a href="https://ko-fi.com/joe_george" target="_blank" class="tab-btn support">
+                <span class="tab-icon">☕</span>
+                <span>Support</span>
+            </a>
+        </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">×</button>
+            <h2>About Chromatone</h2>
+
+            <div class="modal-content">
+                <p class="tagline"><strong>Color → Monochrome Pattern Encoding</strong></p>
+
+                <p>Chromatone is a halftone engine that encodes <em>both</em> color and brightness into
+                    black-and-white patterns. Traditional halftones only represent value (light/dark).
+                    Chromatone goes further — it represents <strong>hue, saturation, and value</strong>
+                    all at once.</p>
+
+                <h3>How It Works</h3>
+                <p>Colors are converted from RGB to an artistic RYB-like model, then mapped to directional marks:</p>
+                <ul>
+                    <li><strong>/</strong> forward slashes → Red</li>
+                    <li><strong>\</strong> backslashes → Blue</li>
+                    <li><strong>•</strong> dots → Yellow</li>
+                    <li><strong>■</strong> squares → Gray/Black</li>
+                </ul>
+                <p>Secondary colors use combinations: Orange = / + •, Green = \ + •, Purple = X (cross-hatch).</p>
+                <p>Line thickness encodes brightness. Saturation controls how broken/continuous the lines appear.</p>
+
+                <h3>What's It For?</h3>
+                <ul>
+                    <li><strong>E-ink displays</strong> — Kindle, reMarkable, and other monochrome screens</li>
+                    <li><strong>Monoprinting</strong> — posters, risograph, screen printing, T-shirts</li>
+                    <li><strong>Tattoo stencils</strong> — transfer-ready patterns</li>
+                    <li><strong>Accessibility</strong> — color information for colorblind viewers</li>
+                    <li><strong>Artistic effect</strong> — create striking monochrome designs</li>
+                </ul>
+
+                <h3>The Process</h3>
+                <p>This engine was built through iterative calibration — testing color wheels,
+                    portraits, and real-world images to tune the hue boundaries and value curves
+                    until the output felt perceptually accurate and aesthetically rich.</p>
+
+                <div class="credits">
+                    <p>Made by <strong>Joe George</strong> with <strong>Claude Opus 4.5</strong></p>
+                    <p class="date">February 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="hatching-engine.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
