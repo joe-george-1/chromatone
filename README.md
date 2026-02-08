@@ -5,6 +5,7 @@
 Chromatone is a powerful web-based halftone engine that transforms color images into rich, directional monochrome patterns. Unlike traditional halftones that only encode brightness (value), Chromatone encodes **hue, saturation, and value** simultaneously using a unique system of slashes, dots, and cross-hatching.
 
 <img width="1624" height="584" alt="Screenshot_20260207_171526" src="https://github.com/user-attachments/assets/20c64135-4951-43c6-a99e-440209e739b5" />
+
 ## Features
 
 - **Hue Encoding**: Colors are mapped to directional marks:
